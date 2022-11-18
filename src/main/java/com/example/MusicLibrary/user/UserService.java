@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User with id "+id + " does not exists"));
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User with id " +id+ " does not exists"));
         return user;
     }
     public void createUser(User user) {
