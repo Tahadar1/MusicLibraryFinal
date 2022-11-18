@@ -30,7 +30,7 @@ public class FavouriteController {
         List<UploadFavouriteResponse> favSongs = favouriteService.getAllFavouriteSong().map(favouriteSong -> {
             String url = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/C:/Users/Taha Rasool/Desktop/MusicLibrary/src/main/resources/")
+                    .path("")
                     .path(String.valueOf(favouriteSong.getFilename()))
                     .toUriString();
             return new UploadFavouriteResponse(favouriteSong.getId(), favouriteSong.getFilename(), url);
@@ -43,7 +43,7 @@ public class FavouriteController {
         FavouriteSong favouriteSong = favouriteService.getSongByFilename(filename);
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/C:/Users/Taha Rasool/Desktop/MusicLibrary/src/main/resources/")
+                .path("")
                 .path(String.valueOf(favouriteSong.getFilename()))
                 .toUriString();
         UploadFavouriteResponse response = new UploadFavouriteResponse(favouriteSong.getId(), favouriteSong.getFilename(), url);

@@ -64,7 +64,7 @@ public class MusicController {
         Music music = musicService.getMusicByFileName(filename);
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/Downloads/")
+                .path("")
                 .path(String.valueOf(music.getFileName()))
                 .toUriString();
         UploadResponse song = new UploadResponse(
@@ -82,7 +82,7 @@ public class MusicController {
         Music music = musicService.getMusicById(id);
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/Downloads/")
+                .path("")
                 .path(String.valueOf(music.getFileName()))
                 .toUriString();
         UploadResponse song = new UploadResponse(
