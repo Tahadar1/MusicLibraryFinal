@@ -17,12 +17,12 @@ public class UserConfig {
     CommandLineRunner commandLineRunnerUser(UserRepository repository){
         return (args) -> {
             User taha = new User(
-                    "Taha",
+                    "User 1",
                     passwordEncoder.encode("123"),
                     "ADMIN"
             );
             User talha = new User(
-                    "Talha",
+                    "User 2",
                     passwordEncoder.encode("123"),
                     "USER"
             );
