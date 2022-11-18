@@ -29,13 +29,13 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User with id " +id+ " does not exists"));
         return user;
     }
-    public void createUser(User user) {
+    public User createUser(User user) {
         Optional<User> optionalUser = userRepository.findByUserName(user.getUserName());
         if(optionalUser.isPresent()){
             throw new IllegalStateException("User with Username "+user.getUserName()+" already exist");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Transactional

@@ -28,8 +28,14 @@ public class MusicService {
                 if (fileName.contains("..")) {
                     throw new IllegalStateException("File Name contain invalid path");
                 }
-                Music music = new Music(fileName, file.getContentType(), false, file.getBytes());
-                musicRepository.save(music);
+                else if(fileName.contains(".mp3")) {
+                    Music music = new Music(fileName, file.getContentType(), false, file.getBytes());
+                    musicRepository.save(music);
+                }
+                else{
+                    String extension = StringUtils.getFilenameExtension(fileName);
+                    throw new IllegalStateException("You are trying to upload ."+extension+" whereas only .mp3 files are supported");
+                }
             } catch (IOException ex) {
                 throw new IllegalStateException("Could not store File" + fileName);
             }

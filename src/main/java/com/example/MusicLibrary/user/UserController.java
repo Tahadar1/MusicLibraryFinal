@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user){
-        userService.createUser(user);
+    public User createUser(@RequestBody User user){
+        return userService.createUser(user);
     }
 
     @PutMapping(path = "{user_Id}")
