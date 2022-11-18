@@ -38,12 +38,6 @@ public class UserController {
             @RequestParam(required = false) String role){
         userService.updateUser(user_Id, userName, password, role);
     }
-//
-//    @PutMapping(path = "/body/{user_Id}")
-//    public void updateUserWithBody(@PathVariable("user_Id") Long id, @RequestBody User user){
-//        userService.updateUserBody(user);
-//
-//    }
 
     @DeleteMapping(path = "{user_Id}")
     public void deleteUser(@PathVariable("user_Id") Long user_Id){
