@@ -16,17 +16,17 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunnerUser(UserRepository repository){
         return (args) -> {
-            User taha = new User(
-                    "Taha",
+            User user1 = new User(
+                    "User 1",
                     passwordEncoder.encode("123"),
                     "ADMIN"
             );
-            User talha = new User(
-                    "Talha",
+            User user2 = new User(
+                    "User 2",
                     passwordEncoder.encode("123"),
                     "USER"
             );
-            repository.saveAll(List.of(taha, talha));
+            repository.saveAll(List.of(user1, user2));
         };
     }
 }
