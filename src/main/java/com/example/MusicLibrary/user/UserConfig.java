@@ -26,7 +26,7 @@ public class UserConfig {
                     passwordEncoder.encode("123"),
                     "USER"
             );
-            repository.saveAll(List.of(taha, talha));
+            repository.saveAll(List.of(user1, user2));
         };
     }
 }
