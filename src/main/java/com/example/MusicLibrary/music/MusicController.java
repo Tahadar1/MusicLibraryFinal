@@ -1,8 +1,10 @@
 package com.example.MusicLibrary.music;
 
+import com.google.common.reflect.ClassPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +44,7 @@ public class MusicController {
         List<UploadResponse> songs = musicService.getAllSongs().map(music -> {
             String url = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/Downloads/")
+                    .path("")
                     .path(String.valueOf(music.getFileName()))
                     .toUriString();
             return new UploadResponse(
