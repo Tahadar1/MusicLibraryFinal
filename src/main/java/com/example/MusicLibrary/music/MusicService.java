@@ -43,11 +43,13 @@ public class MusicService {
     }
 
     public Music getMusicByFileName(String fileName){
-        return musicRepository.findByFileName(fileName).orElseThrow(() -> new IllegalStateException("Song with Name "+fileName+" does not exist"));
+        return musicRepository.findByFileName(fileName)
+                .orElseThrow(() -> new IllegalStateException("Song with Name "+fileName+" does not exist"));
     }
 
     public Music getMusicById(Long id) {
-        return musicRepository.findById(id).orElseThrow(() -> new IllegalStateException("Song with id "+id + " does not exists"));
+        return musicRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Song with id "+id+" does not exists"));
     }
 
     public Stream<Music> getAllSongs() {
