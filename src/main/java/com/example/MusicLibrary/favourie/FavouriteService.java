@@ -47,6 +47,7 @@ public class FavouriteService {
     }
 
     public FavouriteSong getSongByFilename(String filename) {
-        return favouriteRepository.findByFileName(filename).orElseThrow(() -> new IllegalStateException("Song is not present in the playlist"));
+        return favouriteRepository.findByFileName(filename)
+                .orElseThrow(() -> new IllegalStateException("Song is not present in the playlist"));
     }
 }
