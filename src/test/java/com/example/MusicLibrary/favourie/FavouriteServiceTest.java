@@ -56,6 +56,17 @@ class FavouriteServiceTest {
         verify(favouriteRepository, never()).save(any());
     }
 
+    @Test
+    void willNotAddToFavouriteAndThrowAlreadyExists(){
+        FavouriteSong favouriteSong = new FavouriteSong("hello");
+        Music music = new Music(favouriteSong.getId(), favouriteSong.getFilename(), true);
+        given(musicRepository.findById(favouriteSong.getId())).willReturn(Optional.of(music));
+
+        assertThatThrownBy(() -> underTest.addToFavourite(favouriteSong.getId())).isInstanceOf(IllegalStateException.class)
+                .hasMessage("Cannot add to favourite because song is already in the playlist");
+
+        verify(favouriteRepository, never()).save(any());
+    }
     @Test // Working Fine
     void willGetAllFavouriteSong() {
         underTest.getAllFavouriteSong();

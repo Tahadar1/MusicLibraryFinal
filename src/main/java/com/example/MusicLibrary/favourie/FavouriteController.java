@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/music/favourite")
 public class FavouriteController {
-
     private final FavouriteService favouriteService;
 
     @Autowired

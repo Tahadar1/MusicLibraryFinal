@@ -19,7 +19,6 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-    //Todo test in this class are not working properly they are to be reviewed and rewritten.
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
@@ -56,7 +55,7 @@ class UserServiceTest {
 
         assertThatThrownBy(() -> underTest.getUserById(user.getUser_Id()))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("User with id "+ user.getUser_Id() + " does not exists");
+                .hasMessage("User with id "+ user.getUser_Id() + " does not exists");
     }
 
     @Test
@@ -78,7 +77,7 @@ class UserServiceTest {
 
         assertThatThrownBy(() -> underTest.createUser(user))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("User with Username "+user.getUserName()+" already exist");
+                .hasMessage("User with Username "+user.getUserName()+" already exist");
 
         verify(passwordEncoder, never()).encode(any());
         verify(userRepository, never()).save(any());
@@ -103,7 +102,7 @@ class UserServiceTest {
 
         assertThatThrownBy(() -> underTest.updateUser(user.getUser_Id(), user.getUserName(), user.getPassword(), user.getRole()))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("User with Username "+user.getUserName()+" already exist");
+                .hasMessage("User with Username "+user.getUserName()+" already exist");
     }
     @Test
     void willDeleteUser() {
@@ -113,5 +112,15 @@ class UserServiceTest {
         underTest.deleteUser(user.getUser_Id());
 
         verify(userRepository).deleteById(user.getUser_Id());
+    }
+
+    @Test
+    void willNotDeleteUserAndThrowDoesNotExists(){
+        User user = new User(1L,"Taha", "123", "ADMIN");
+
+        assertThatThrownBy(() -> underTest.deleteUser(user.getUser_Id())).isInstanceOf(IllegalStateException.class)
+                .hasMessage("User does not exist");
+
+        verify(userRepository, never()).deleteById(any());
     }
 }
