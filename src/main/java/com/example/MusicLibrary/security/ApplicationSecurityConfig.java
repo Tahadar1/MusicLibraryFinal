@@ -51,6 +51,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 //Config for Http Security
+                .cors()
+                .and()
                 .csrf().disable()// Only enable this when the application is used in web browsers
                 //Stateless functionality of Jason Web Token
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -58,6 +60,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Filters for Jason Web Token
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+
                 .authorizeRequests()
                 //Role based authentication for User
                 .antMatchers(HttpMethod.GET, "/api/v1/music/user").hasAnyRole("ADMIN")

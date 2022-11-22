@@ -54,7 +54,13 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date()).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
                 .signWith(secretKey).compact();
-
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+        //if you need token in body of response than uncomment this code
+
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+//        response.getWriter().write(
+//                "{\"" + jwtConfig.getAuthorizationHeader() + "\":\"" + jwtConfig.getTokenPrefix()+ token + "\"}"
+//        );
     }
 }
