@@ -32,7 +32,7 @@ public class FavouriteController {
                     .path("")
                     .path(String.valueOf(favouriteSong.getFilename()))
                     .toUriString();
-            return new UploadFavouriteResponse(favouriteSong.getId(), favouriteSong.getFilename(), url);
+            return new UploadFavouriteResponse(favouriteSong.getId(), true , favouriteSong.getFilename(), url);
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(favSongs);
     }
@@ -45,7 +45,7 @@ public class FavouriteController {
                 .path("")
                 .path(String.valueOf(favouriteSong.getFilename()))
                 .toUriString();
-        UploadFavouriteResponse response = new UploadFavouriteResponse(favouriteSong.getId(), favouriteSong.getFilename(), url);
+        UploadFavouriteResponse response = new UploadFavouriteResponse(favouriteSong.getId(), true, favouriteSong.getFilename(), url);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

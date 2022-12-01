@@ -60,7 +60,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Filters for Jason Web Token
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
-
                 .authorizeRequests()
                 //Role based authentication for User
                 .antMatchers(HttpMethod.GET, "/api/v1/music/user").hasAnyRole("ADMIN")
@@ -81,7 +80,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/v1/music/favourite/add/**").hasAnyRole("ADMIN", "USER");
         //super.configure(http);
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());

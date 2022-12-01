@@ -27,7 +27,7 @@ class FavouriteServiceTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new FavouriteService(favouriteRepository, musicRepository);
+        //underTest = new FavouriteService(favouriteRepository, musicRepository, musicService);
     }
 
     @Test //Working Fine

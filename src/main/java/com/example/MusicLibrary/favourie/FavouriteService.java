@@ -2,6 +2,7 @@ package com.example.MusicLibrary.favourie;
 
 import com.example.MusicLibrary.music.Music;
 import com.example.MusicLibrary.music.MusicRepository;
+import com.example.MusicLibrary.music.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,13 @@ public class FavouriteService {
     private final FavouriteRepository favouriteRepository;
     private final MusicRepository musicRepository;
 
+    private final MusicService musicService;
+
     @Autowired
-    public FavouriteService(FavouriteRepository favouriteRepository, MusicRepository musicRepository) {
+    public FavouriteService(FavouriteRepository favouriteRepository, MusicRepository musicRepository, MusicService musicService) {
         this.favouriteRepository = favouriteRepository;
         this.musicRepository = musicRepository;
+        this.musicService = musicService;
     }
 
     public void addToFavourite(Long id) {
@@ -39,8 +43,8 @@ public class FavouriteService {
     }
 
     public void removeFromFavourite(Long id){
-        boolean exists = favouriteRepository.existsById(id);
-        if(!exists){
+        Optional<FavouriteSong> favouriteSong = favouriteRepository.findById(id);
+        if(favouriteSong.isEmpty()){
             throw new IllegalStateException("Song is not present in favourite list");
         }
         favouriteRepository.deleteById(id);
