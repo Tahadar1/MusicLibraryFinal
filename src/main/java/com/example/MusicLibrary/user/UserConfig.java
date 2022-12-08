@@ -14,18 +14,10 @@ public class UserConfig {
     private PasswordEncoder passwordEncoder;
 
     @Bean
-    CommandLineRunner commandLineRunnerUser(UserRepository repository){
+    CommandLineRunner commandLineRunnerUser(UserRepository repository) {
         return (args) -> {
-            User user1 = new User(
-                    "User 1",
-                    passwordEncoder.encode("123"),
-                    "ADMIN"
-            );
-            User user2 = new User(
-                    "User 2",
-                    passwordEncoder.encode("123"),
-                    "USER"
-            );
+            User user1 = new User("User 1", passwordEncoder.encode("123"), "ADMIN");
+            User user2 = new User("User 2", passwordEncoder.encode("123"), "USER");
             repository.saveAll(List.of(user1, user2));
         };
     }

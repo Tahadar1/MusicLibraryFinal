@@ -33,10 +33,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UsernamePasswordAuthenticationRequest authenticationRequest = new ObjectMapper().readValue(request.getInputStream(), UsernamePasswordAuthenticationRequest.class);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getUsername(),
-                    authenticationRequest.getPassword()
-            );
+            Authentication authentication = new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             Authentication authenticate = authenticationManager.authenticate(authentication);
             return authenticate;
         } catch (IOException e) {
@@ -45,15 +42,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request,
-                                            HttpServletResponse response,
-                                            FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        String token = Jwts.builder().setSubject(authResult.getName())
-                .claim("authorities", authResult.getAuthorities())
-                .setIssuedAt(new Date()).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
-                .signWith(secretKey).compact();
+        String token = Jwts.builder().setSubject(authResult.getName()).claim("authorities", authResult.getAuthorities()).setIssuedAt(new Date()).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1))).signWith(secretKey).compact();
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
         //if you need token in body of response than uncomment this code
 

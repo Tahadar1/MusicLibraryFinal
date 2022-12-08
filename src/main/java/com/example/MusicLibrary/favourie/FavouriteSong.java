@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,23 +15,12 @@ import java.util.List;
 @Table(name = "favourite_song")
 public class FavouriteSong {
     @Id
-    @SequenceGenerator(name = "favourite_sequence", sequenceName = "favourite_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "favourite_sequence")
     private Long Id;
 
+    private Boolean isFavourite;
     private String filename;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "has_song",
-            joinColumns = @JoinColumn(
-                    name = "favourite_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "music_id",
-                    referencedColumnName = "music_id"
-            )
-    )
+    @JoinTable(name = "has_song", joinColumns = @JoinColumn(name = "favourite_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "music_id", referencedColumnName = "music_id"))
     private List<Music> music;
 
     public FavouriteSong(String filename) {
@@ -47,5 +37,9 @@ public class FavouriteSong {
         this.music = music;
     }
 
-
+    public FavouriteSong(Long id, Boolean isFavourite, String filename) {
+        this.isFavourite = isFavourite;
+        this.filename = filename;
+        this.Id = id;
+    }
 }

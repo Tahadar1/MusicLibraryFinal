@@ -27,31 +27,31 @@ public class FavouriteService {
         Optional<Music> music = musicRepository.findById(id);
         if (music.isEmpty()) {
             throw new IllegalStateException("Cannot add to favourite because song does not exists");
-        }
-        else if (music.get().getIsFavorite()){
+        } else if (music.get().getIsFavorite()) {
             throw new IllegalStateException("Cannot add to favourite because song is already in the playlist");
-        }
-        else {
+        } else {
             music.get().setIsFavorite(true);
-            FavouriteSong favouriteSong = new FavouriteSong(music.get().getFileName(), music.stream().toList());
+            FavouriteSong favouriteSong = new FavouriteSong(music.get().getMusic_Id(), music.get().getIsFavorite(), music.get().getFileName());
             favouriteRepository.save(favouriteSong);
         }
     }
 
-    public Stream<FavouriteSong> getAllFavouriteSong(){
+    public Stream<FavouriteSong> getAllFavouriteSong() {
         return favouriteRepository.findAll().stream();
     }
 
-    public void removeFromFavourite(Long id){
+    public void removeFromFavourite(Long id) {
         Optional<FavouriteSong> favouriteSong = favouriteRepository.findById(id);
-        if(favouriteSong.isEmpty()){
+        Optional<Music> music = musicRepository.findById(id);
+        if (favouriteSong.isEmpty()) {
             throw new IllegalStateException("Song is not present in favourite list");
         }
+        favouriteSong.get().setIsFavourite(false);
+        music.get().setIsFavorite(false);
         favouriteRepository.deleteById(id);
     }
 
     public FavouriteSong getSongByFilename(String filename) {
-        return favouriteRepository.findByFileName(filename)
-                .orElseThrow(() -> new IllegalStateException("Song is not present in the playlist"));
+        return favouriteRepository.findByFileName(filename).orElseThrow(() -> new IllegalStateException("Song is not present in the playlist"));
     }
 }

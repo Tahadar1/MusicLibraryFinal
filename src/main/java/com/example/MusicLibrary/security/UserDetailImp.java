@@ -13,14 +13,15 @@ import java.util.stream.Collectors;
 public class UserDetailImp implements UserDetails {
 
     private User user;
+
     public UserDetailImp(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(null != user.getRole() && !user.getRole().isEmpty()){
-            return Arrays.stream(user.getRole().split(",")).map(role -> new SimpleGrantedAuthority("ROLE_"+role)).collect(Collectors.toList());
+        if (null != user.getRole() && !user.getRole().isEmpty()) {
+            return Arrays.stream(user.getRole().split(",")).map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }

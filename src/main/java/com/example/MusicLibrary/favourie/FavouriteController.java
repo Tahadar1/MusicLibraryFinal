@@ -25,32 +25,24 @@ public class FavouriteController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UploadFavouriteResponse>> getAllFavouriteSongs(){
+    public ResponseEntity<List<UploadFavouriteResponse>> getAllFavouriteSongs() {
         List<UploadFavouriteResponse> favSongs = favouriteService.getAllFavouriteSong().map(favouriteSong -> {
-            String url = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("")
-                    .path(String.valueOf(favouriteSong.getFilename()))
-                    .toUriString();
-            return new UploadFavouriteResponse(favouriteSong.getId(), true , favouriteSong.getFilename(), url);
+            String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("").path(String.valueOf(favouriteSong.getFilename())).toUriString();
+            return new UploadFavouriteResponse(favouriteSong.getId(), true, favouriteSong.getFilename(), url);
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(favSongs);
     }
 
     @GetMapping("/filename/{filename}")
-    public ResponseEntity<UploadFavouriteResponse> getSongFromFavouriteByFilename(@PathVariable("filename") String filename){
+    public ResponseEntity<UploadFavouriteResponse> getSongFromFavouriteByFilename(@PathVariable("filename") String filename) {
         FavouriteSong favouriteSong = favouriteService.getSongByFilename(filename);
-        String url = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("")
-                .path(String.valueOf(favouriteSong.getFilename()))
-                .toUriString();
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("").path(String.valueOf(favouriteSong.getFilename())).toUriString();
         UploadFavouriteResponse response = new UploadFavouriteResponse(favouriteSong.getId(), true, favouriteSong.getFilename(), url);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/id/{id}")
-    public void removeFromFavourite(@PathVariable("id") Long id){
+    public void removeFromFavourite(@PathVariable("id") Long id) {
         favouriteService.removeFromFavourite(id);
     }
 }

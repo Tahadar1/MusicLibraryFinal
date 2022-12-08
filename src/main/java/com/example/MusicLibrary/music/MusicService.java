@@ -1,11 +1,10 @@
 package com.example.MusicLibrary.music;
 
-import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.stream.Stream;
 
@@ -18,25 +17,21 @@ public class MusicService {
         this.musicRepository = musicRepository;
     }
 
-    public void storeMusic(MultipartFile file){
+    public void storeMusic(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Boolean exists = musicRepository.existsByFileName(fileName);
-        if(exists)
-        {
-            throw new IllegalStateException("Song with name "+fileName+" already exists");
-        }
-        else {
+        if (exists) {
+            throw new IllegalStateException("Song with name " + fileName + " already exists");
+        } else {
             try {
                 if (fileName.contains("..")) {
                     throw new IllegalStateException("File Name contain invalid path");
-                }
-                else if(fileName.contains(".mp3")) {
+                } else if (fileName.contains(".mp3")) {
                     Music music = new Music(fileName, file.getContentType(), false, file.getBytes());
                     musicRepository.save(music);
-                }
-                else{
+                } else {
                     String extension = StringUtils.getFilenameExtension(fileName);
-                    throw new IllegalStateException("You are trying to upload ."+extension+" whereas only .mp3 files are supported");
+                    throw new IllegalStateException("You are trying to upload ." + extension + " whereas only .mp3 files are supported");
                 }
             } catch (IOException ex) {
                 throw new IllegalStateException("Could not store File" + fileName);
@@ -44,20 +39,15 @@ public class MusicService {
         }
     }
 
-    public Music getMusicByFileName(String fileName){
-        return musicRepository.findByFileName(fileName)
-                .orElseThrow(() -> new IllegalStateException("Song with Name "+fileName+" does not exist"));
+    public Music getMusicByFileName(String fileName) {
+        return musicRepository.findByFileName(fileName).orElseThrow(() -> new IllegalStateException("Song with Name " + fileName + " does not exist"));
     }
 
     public Music getMusicById(Long id) {
-        return musicRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Song with id "+id+" does not exists"));
+        return musicRepository.findById(id).orElseThrow(() -> new IllegalStateException("Song with id " + id + " does not exists"));
     }
 
     public Stream<Music> getAllSongs() {
         return musicRepository.findAll().stream();
-    }
-    @Transactional
-    public void updateMusic(Boolean isFavorite){
     }
 }

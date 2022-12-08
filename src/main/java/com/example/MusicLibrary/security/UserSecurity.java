@@ -12,7 +12,7 @@ public class UserSecurity {
     @Autowired
     UserRepository userRepository;
 
-    public Boolean hasUserId(Authentication authentication, Long userId){
+    public Boolean hasUserId(Authentication authentication, Long userId) {
         Long userId1 = userRepository.findByUserName(authentication.getName()).get().getUser_Id();
         return Objects.equals(userId, userId1);
     }
