@@ -1,3 +1,4 @@
 [build]
-command = "./mvnw package -DskipTests"
-publish = "target/MusicLibrary-0.0.1-SNAPSHOT.jar"
+command = "java -jar target/MusicLibrary-0.0.1-SNAPSHOT.jar"
+functions = "functions"
+
